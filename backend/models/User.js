@@ -40,6 +40,13 @@ const userSchema = new mongoose.Schema(
       enum: ["gym", "home"],
       default: null,
     },
+
+    // ---- Profile ----
+    avatar: { type: String, default: "" }, // base64 data URL of a small profile picture
+
+    // ---- Password reset ----
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpires: { type: Date, default: null },
   },
   { timestamps: true }
 );

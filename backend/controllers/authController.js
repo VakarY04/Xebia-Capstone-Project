@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 import User from "../models/User.js";
+import { sendResetEmail } from "../utils/sendEmail.js";
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -32,6 +34,78 @@ export const signup = async (req, res) => {
       onboardingComplete: user.onboardingComplete,
       token: generateToken(user._id),
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @route POST /api/auth/forgot-password
+// Always responds with a generic success message, whether or not the email
+// exists - this prevents attackers from using this endpoint to check which
+// emails are registered.
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const rawToken = crypto.randomBytes(32).toString("hex");
+      const hashedToken = crypto.createHash("sha256").update(rawToken).digest("hex");
+
+      user.resetPasswordToken = hashedToken;
+      user.resetPasswordExpires = Date.now() + 30 * 60 * 1000; // 30 minutes
+      await user.save();
+
+      const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+      const resetUrl = `${clientUrl}/reset-password/${rawToken}`;
+
+      try {
+        await sendResetEmail(user.email, resetUrl);
+      } catch (emailError) {
+        console.error("Failed to send reset email:", emailError.message);
+        // Roll back the token if the email couldn't actually be sent
+        user.resetPasswordToken = null;
+        user.resetPasswordExpires = null;
+        await user.save();
+        return res.status(500).json({
+          message:
+            "Couldn't send the reset email. Check your backend EMAIL_USER/EMAIL_PASS setup in .env",
+        });
+      }
+    }
+
+    res.json({
+      message: "If that email is registered, a reset link has been sent.",
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @route POST /api/auth/reset-password/:token
+export const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Reset link is invalid or has expired" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    await user.save();
+
+    res.json({ message: "Password updated successfully. You can now log in." });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Segoe UI", system-ui, sans-serif;
+  background-color: #121212;
+}
+
+/* Subtle custom scrollbar - fits the dark theme better than the OS default */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f3f;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #84cc16;
+}
+
+@layer components {
+  /* Reusable interactive card - lifts and glows slightly on hover */
+  .interactive-card {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30;
+  }
+
+  /* Reusable primary button with hover + active feedback */
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark active:scale-95 text-dark font-semibold
+      transition-all duration-200 hover:shadow-lg hover:shadow-primary/30;
+  }
+
+  /* Text inputs get a clear focus + hover ring */
+  .input-field {
+    @apply bg-white/5 border border-white/10 text-white placeholder-slate-500 outline-none
+      transition-all duration-200 hover:border-white/25 focus:border-primary focus:ring-2 focus:ring-primary/40;
+  }
 }

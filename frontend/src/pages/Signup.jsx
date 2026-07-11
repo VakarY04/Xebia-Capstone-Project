@@ -52,7 +52,7 @@ const Signup = () => {
           placeholder="Full name"
           value={form.name}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-3 rounded-lg bg-white/10 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-primary"
+          className="input-field w-full mb-4 px-4 py-3 rounded-lg"
           required
         />
         <input
@@ -61,7 +61,7 @@ const Signup = () => {
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
-          className="w-full mb-4 px-4 py-3 rounded-lg bg-white/10 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-primary"
+          className="input-field w-full mb-4 px-4 py-3 rounded-lg"
           required
         />
         <input
@@ -70,14 +70,14 @@ const Signup = () => {
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
-          className="w-full mb-6 px-4 py-3 rounded-lg bg-white/10 text-white placeholder-slate-400 outline-none focus:ring-2 focus:ring-primary"
+          className="input-field w-full mb-6 px-4 py-3 rounded-lg"
           required
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-lg transition disabled:opacity-50"
+          className="btn-primary w-full py-3 rounded-lg disabled:opacity-50"
         >
           {loading ? "Creating account..." : "Sign Up"}
         </button>

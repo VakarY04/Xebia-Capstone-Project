@@ -18,16 +18,29 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-64 min-h-screen bg-slate-900 border-r border-white/10 flex flex-col justify-between fixed left-0 top-0">
+    <aside className="w-64 min-h-screen bg-dark-surface border-r border-white/10 flex flex-col justify-between fixed left-0 top-0">
       <div>
         <div className="px-6 py-6 border-b border-white/10">
           <h1 className="text-xl font-bold text-white">
             AI <span className="text-primary">Fit</span>
           </h1>
           {user && (
-            <p className="text-slate-400 text-sm mt-1 truncate">
-              Hi, {user.name?.split(" ")[0]}
-            </p>
+            <div className="flex items-center gap-2 mt-2">
+              {user.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt="avatar"
+                  className="w-6 h-6 rounded-full object-cover border border-primary/40"
+                />
+              ) : (
+                <span className="w-6 h-6 rounded-full bg-primary/20 text-primary text-xs flex items-center justify-center font-bold">
+                  {user.name?.[0]?.toUpperCase()}
+                </span>
+              )}
+              <p className="text-slate-400 text-sm truncate">
+                Hi, {user.name?.split(" ")[0]}
+              </p>
+            </div>
           )}
         </div>
 
@@ -37,7 +50,7 @@ const Sidebar = () => {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${
+                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 hover:translate-x-1 ${
                   isActive
                     ? "bg-primary/20 text-primary"
                     : "text-slate-300 hover:bg-white/5"

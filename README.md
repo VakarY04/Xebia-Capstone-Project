@@ -1,20 +1,42 @@
 # AI Fit — AI Fitness & Nutrition Coach (MERN)
 
-## What's built so far (Phase 1 + Phase 2)
-- Full backend: Express + MongoDB (Mongoose), JWT auth (signup/login), User model with all onboarding fields, protected routes
-- Frontend: React (Vite) + Tailwind, routing, Auth context, Landing page, Login/Signup
-- **All 4 onboarding steps**, fully working and saving to MongoDB after each step:
-  1. Gender
-  2. Age, height, weight
-  3. Experience level + goal
-  4. Injuries/conditions, available days, gym vs home (marks onboarding complete → redirects to Dashboard)
-- **Sidebar navigation** (Dashboard / My Details / Stats / Profile / Log out) wrapping the logged-in app
-- **My Details page** — view and edit every onboarding answer, saves back to MongoDB
-- You can now sign up, complete the full onboarding flow, and land on the dashboard shell. Dashboard/Stats/Profile currently show "coming soon" placeholders until their phases are built.
+## What's built (Phases 1-5 — feature complete + polished)
+- **Backend**: Express + MongoDB (Mongoose), JWT auth, User/Plan/Log models, protected routes, Gemini AI integration for plan generation, Nodemailer for password reset emails
+- **Landing page**: fixed nav (Home / Features / About Us, smooth-scroll), animated hero using your own gym photos as section backgrounds, workout + nutrition motivation banners, feature cards with photo thumbnails
+- **Auth**: Login, Signup, Forgot Password (emails a reset link), Reset Password
+- **All 4 onboarding steps** — gender, body stats, experience/goal, injuries/days/location
+- **Sidebar navigation** with your avatar shown next to your name
+- **My Details** — edit any onboarding answer
+- **Dashboard** — AI-generated 7-day workout + meal plan, day tabs, each exercise shown with a representative photo based on its muscle group
+- **Stats** — adherence logging, weight trend / muscle-group / calories-protein charts with descriptive subtitles and richer tooltips
+- **Profile** — profile picture upload (resized client-side before upload, so it stays small), account info, **Delete Account** (type-to-confirm, permanently removes your user, plans, and logs)
+- **Dark fitness theme**: lime-green primary / amber accent palette, hover-and-lift effects on cards, glowing buttons, custom scrollbar, smooth animations on the landing page
 
-## What's coming next
-- **Phase 3:** Dashboard + Gemini AI plan generation (7-day workout & meal plan) + ExerciseDB integration
-- **Phase 4:** Stats page (charts) + Profile/settings page
+## New setup steps for this version
+
+### 1. Install the one new backend package
+```bash
+cd backend
+npm install
+```
+(`nodemailer` was added to `package.json` — this pulls it in.)
+
+### 2. Set up email sending (for Forgot Password)
+Add to `backend/.env`:
+```
+EMAIL_USER=youraddress@gmail.com
+EMAIL_PASS=your16charapppassword
+CLIENT_URL=http://localhost:5173
+```
+To get an app password:
+1. Turn on 2-Step Verification on your Google account if it isn't already
+2. Go to https://myaccount.google.com/apppasswords
+3. Create one named "AI Fit" → copy the 16-character password (not your normal Gmail password)
+
+### 3. Frontend images
+The images you provided are already placed in `frontend/public/images/` and wired into the Landing page and Dashboard exercise cards — nothing to configure, they just work once you `npm install` and run the frontend.
+
+Everything else (MongoDB, Gemini key) is the same as before.
 
 ---
 
@@ -72,16 +94,16 @@ It will start at **http://localhost:5173** — open that in your browser.
 ai-fit/
 ├── backend/
 │   ├── config/db.js          # MongoDB connection
-│   ├── models/                # User.js, Plan.js (Mongoose schemas)
-│   ├── controllers/           # business logic (auth, user)
+│   ├── models/                # User.js, Plan.js, Log.js (Mongoose schemas)
+│   ├── controllers/           # business logic (auth, user, plan, log)
 │   ├── routes/                # API endpoints
 │   ├── middleware/auth.js     # JWT verification
 │   ├── server.js              # app entry point
 │   └── .env                   # your secrets (you create this)
 └── frontend/
     ├── src/
-    │   ├── pages/              # Landing, Login, Signup, onboarding/*, Dashboard...
-    │   ├── components/         # ProtectedRoute, (Navbar/Sidebar in Phase 2)
+    │   ├── pages/              # Landing, Login, Signup, onboarding/*, Dashboard, MyDetails, Stats, Profile
+    │   ├── components/         # Sidebar, DashboardLayout, ProtectedRoute, OnboardingProgress
     │   ├── context/AuthContext.jsx   # global logged-in user state
     │   ├── api/axios.js        # pre-configured API client
     │   └── App.jsx             # all routes
@@ -91,5 +113,11 @@ ai-fit/
 ## Explaining this to your teacher (in plain terms)
 - **MERN stack**: MongoDB (database) + Express (backend web server) + React (frontend UI) + Node.js (runs the backend JavaScript)
 - **JWT authentication**: when a user logs in, the server gives them a signed token; the browser sends that token with every request afterward to prove who they are — no server-side session storage needed
-- **Mongoose schemas**: define the shape of the data stored in MongoDB (User, Plan) — like a blueprint
-- **Onboarding data model**: each user's gender/age/goals/etc. are just fields on their User document. When the AI generates a plan (Phase 3), it reads those fields, sends them to the Gemini API with a prompt, and stores the structured result in a Plan document.
+- **Mongoose schemas**: define the shape of the data stored in MongoDB (User, Plan, Log) — like a blueprint
+- **AI plan generation flow**: when you click "Generate My Plan," the backend reads your saved onboarding fields (age, goal, injuries, etc.), builds a detailed text prompt, sends it to Google's Gemini API asking for a strict JSON schema back, parses that JSON, and saves it as a `Plan` document in MongoDB — the frontend then just renders that JSON as day tabs
+- **Stats page**: combines two data sources — your `Log` entries (did you actually do the workout, what did you weigh) and your `Plan` (planned calories/protein/muscle groups) — and charts them with the `recharts` library
+- **Regeneration**: editing "My Details" doesn't auto-regenerate the plan (to avoid burning API calls on every keystroke) — you click "Regenerate Plan" on the Dashboard when you want a fresh one based on the new details
+- **Password reset flow**: forgot-password generates a random token, stores only its SHA-256 hash in MongoDB (never the raw token) with a 30-minute expiry, emails the raw token in a link via Nodemailer, and the reset endpoint re-hashes whatever token comes back in the URL to check it matches — this is the same pattern real production apps use
+- **Profile picture**: resized to a small square directly in the browser using the Canvas API before it's ever sent to the server, then stored as a base64 string on the User document — no third-party file storage service needed
+- **Delete account**: requires typing "DELETE" to confirm, then removes the User plus all their Plan and Log documents so no orphaned data is left behind
+
