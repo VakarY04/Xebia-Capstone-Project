@@ -21,9 +21,18 @@ export const AuthProvider = ({ children }) => {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = (userData) => {
+  const login = async (userData) => {
     localStorage.setItem("aifit_token", userData.token);
-    setUser(userData);
+    setUser(userData); // set immediately so the UI isn't blank
+    try {
+      // The signup/login response only has a few fields (id, name, email, token).
+      // Fetch the full profile right away so pages like Dashboard/Settings that
+      // need age, height, availableDays, etc. have real data without a refresh.
+      const res = await api.get("/users/me");
+      setUser(res.data);
+    } catch {
+      // If this fails, the minimal userData set above still keeps the app usable.
+    }
   };
 
   const logout = () => {

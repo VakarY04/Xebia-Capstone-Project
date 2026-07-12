@@ -1,20 +1,15 @@
 import mongoose from "mongoose";
 
-// One document = one full 7-day plan for a user.
-// We keep it flexible (Mixed) since the AI output structure is JSON
-// generated dynamically - this is the kind of flexible data MongoDB is good at.
+// One document stores the latest generated plan for a user.
+// The `days` array can cover 1-4 weeks and stays flexible because
+// the AI response contains nested workout/meal JSON.
 const planSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    totalWeeks: { type: Number, required: true, default: 1, min: 1, max: 4 },
+    startDate: { type: String, required: true },
     days: { type: mongoose.Schema.Types.Mixed, required: true },
-    // days will look like:
-    // [
-    //   { day: "Monday", workout: { focus: "Chest & Triceps", exercises: [...] },
-    //     meals: { breakfast: {...}, lunch: {...}, dinner: {...}, snacks: [...] },
-    //     totalCalories: 2200, totalProtein: 140 },
-    //   ... x7
-    // ]
-    generatedFrom: { type: mongoose.Schema.Types.Mixed }, // snapshot of onboarding answers used
+    generatedFrom: { type: mongoose.Schema.Types.Mixed },
   },
   { timestamps: true }
 );

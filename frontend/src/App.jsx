@@ -10,7 +10,9 @@ import Experience from "./pages/onboarding/Experience.jsx";
 import Availability from "./pages/onboarding/Availability.jsx";
 import MyDetails from "./pages/MyDetails.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import MealPlan from "./pages/MealPlan.jsx";
 import Stats from "./pages/Stats.jsx";
+import Settings from "./pages/Settings.jsx";
 import Profile from "./pages/Profile.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
@@ -23,7 +25,6 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-      {/* Onboarding - all 4 steps built */}
       <Route
         path="/onboarding/gender"
         element={
@@ -57,12 +58,19 @@ function App() {
         }
       />
 
-      {/* Main app */}
       <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/meal-plan"
+        element={
+          <ProtectedRoute>
+            <MealPlan />
           </ProtectedRoute>
         }
       />
@@ -87,6 +95,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <Settings />
           </ProtectedRoute>
         }
       />

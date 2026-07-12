@@ -86,7 +86,7 @@ const Landing = () => {
         className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 relative overflow-hidden"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(18,18,18,0.55), rgba(18,18,18,0.88)), url('/images/home-hero.jpg')",
+            "linear-gradient(rgba(18,18,18,0.55), rgba(18,18,18,0.88)), url('/images/hero-barn-gym.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -123,7 +123,7 @@ const Landing = () => {
         className="py-20 px-6 relative"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(18,18,18,0.55), rgba(18,18,18,0.75)), url('/images/stronger-than-excuses.jpg')",
+            "linear-gradient(rgba(18,18,18,0.5), rgba(18,18,18,0.8)), url('/images/kettlebell-silhouette.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

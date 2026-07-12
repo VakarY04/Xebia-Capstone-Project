@@ -1,16 +1,20 @@
 # AI Fit — AI Fitness & Nutrition Coach (MERN)
 
-## What's built (Phases 1-5 — feature complete + polished)
-- **Backend**: Express + MongoDB (Mongoose), JWT auth, User/Plan/Log models, protected routes, Gemini AI integration for plan generation, Nodemailer for password reset emails
-- **Landing page**: fixed nav (Home / Features / About Us, smooth-scroll), animated hero using your own gym photos as section backgrounds, workout + nutrition motivation banners, feature cards with photo thumbnails
-- **Auth**: Login, Signup, Forgot Password (emails a reset link), Reset Password
-- **All 4 onboarding steps** — gender, body stats, experience/goal, injuries/days/location
-- **Sidebar navigation** with your avatar shown next to your name
-- **My Details** — edit any onboarding answer
-- **Dashboard** — AI-generated 7-day workout + meal plan, day tabs, each exercise shown with a representative photo based on its muscle group
-- **Stats** — adherence logging, weight trend / muscle-group / calories-protein charts with descriptive subtitles and richer tooltips
-- **Profile** — profile picture upload (resized client-side before upload, so it stays small), account info, **Delete Account** (type-to-confirm, permanently removes your user, plans, and logs)
-- **Dark fitness theme**: lime-green primary / amber accent palette, hover-and-lift effects on cards, glowing buttons, custom scrollbar, smooth animations on the landing page
+## What's built (Phases 1-7 — feature complete, redesigned to match your mockups)
+- **Backend**: Express + MongoDB (Mongoose), JWT auth, User/Plan/Log models, protected routes, Gemini AI (calories/protein/carbs/fats), Nodemailer, change-password endpoint
+- **Collapsible sidebar**: click the burger icon (☰) next to "Good morning" on the Dashboard, or the "« Collapse" button inside the sidebar itself, to toggle between full-width and icon-only. Works from any page.
+- **Dashboard** (new, matches your reference): greeting header, 4 real stat cards (Calories Today, Protein Today, Water Intake, Current Streak — no fake steps/sleep numbers, only things the app actually tracks), a weekly activity chart + weekly-goal ring, Today's Reminders checklist, Today's Workout card, and a daily motivation bar
+- **Nutrition & Meal Plan** (`/meal-plan`): the combined page from the last update — day tabs, 4-stat macro summary (calories/protein/carbs/fats), workout + meals side by side
+- **Settings** (`/settings`, replaces the old Profile page): profile card with avatar/name/member-since/body stats, Account Stats (workouts completed, days active, streak — computed from your logs), and Account Actions with a fully working **Change Password** form plus Delete Account
+- **My Details** and **Stats** — unchanged in function, Stats' daily log form now also captures water intake (feeds the Dashboard's water card)
+
+## Design decisions worth knowing about
+- **Steps and Sleep** from your reference images aren't in AI Fit — there's no wearable/device integration to source that data from, so I didn't fabricate numbers for them. Water Intake and Current Streak replace them with metrics the app can actually back with real data.
+- **One log entry per day**: the "Log Today" form on the Stats page captures workout/meals/weight/water together in a single submission, which is what feeds both the Dashboard reminders and the Settings stats — logging once per day per day-name keeps the adherence math accurate. Submitting multiple partial logs for the same day will make adherence stats slightly noisy since each submission counts as its own logged day.
+- **Settings only shows fields AI Fit actually collects** (name, email, gender, age, height, weight) — your reference mockup also showed Phone, Date of Birth, and Bio, which aren't part of the onboarding flow. I skipped fabricating those; let me know if you want them added to onboarding for real.
+
+## Setup — unchanged
+Same MongoDB Atlas, Gemini API key, and email app-password steps as before. Nothing new to configure.
 
 ## New setup steps for this version
 

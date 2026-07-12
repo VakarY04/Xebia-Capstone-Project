@@ -1,75 +1,136 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useSidebar } from "../context/SidebarContext.jsx";
+import {
+  ChartIcon,
+  ChevronRightIcon,
+  DashboardIcon,
+  DetailsIcon,
+  LogoMark,
+  LogoutIcon,
+  PlanIcon,
+  SettingsIcon,
+} from "./AppIcons.jsx";
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: "🏠" },
-  { to: "/my-details", label: "My Details", icon: "📝" },
-  { to: "/stats", label: "Stats", icon: "📊" },
-  { to: "/profile", label: "Profile", icon: "⚙️" },
+  { to: "/dashboard", label: "Dashboard", icon: DashboardIcon },
+  { to: "/meal-plan", label: "Workout and Meals", icon: PlanIcon },
+  { to: "/my-details", label: "My Details", icon: DetailsIcon },
+  { to: "/stats", label: "Stats", icon: ChartIcon },
+  { to: "/settings", label: "Settings", icon: SettingsIcon },
 ];
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
+  const { collapsed, mobileOpen, closeMobileSidebar } = useSidebar();
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    closeMobileSidebar();
     logout();
     navigate("/");
   };
 
+  const handleOpenProfile = () => {
+    closeMobileSidebar();
+    navigate("/profile");
+  };
+
   return (
-    <aside className="w-64 min-h-screen bg-dark-surface border-r border-white/10 flex flex-col justify-between fixed left-0 top-0">
-      <div>
-        <div className="px-6 py-6 border-b border-white/10">
-          <h1 className="text-xl font-bold text-white">
-            AI <span className="text-primary">Fit</span>
-          </h1>
-          {user && (
-            <div className="flex items-center gap-2 mt-2">
-              {user.avatar ? (
-                <img
-                  src={user.avatar}
-                  alt="avatar"
-                  className="w-6 h-6 rounded-full object-cover border border-primary/40"
-                />
-              ) : (
-                <span className="w-6 h-6 rounded-full bg-primary/20 text-primary text-xs flex items-center justify-center font-bold">
-                  {user.name?.[0]?.toUpperCase()}
-                </span>
-              )}
-              <p className="text-slate-400 text-sm truncate">
-                Hi, {user.name?.split(" ")[0]}
+    <aside
+      className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/10 bg-slate-950 text-white shadow-[0_24px_80px_rgba(15,23,42,0.38)] transition-all duration-300 ${
+        collapsed ? "w-24" : "w-72"
+      } ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
+    >
+      <div className="flex h-full flex-col">
+        <div className="flex items-center gap-3 border-b border-white/10 px-5 py-6">
+          <LogoMark className="h-12 w-12 shrink-0" />
+          {!collapsed ? (
+            <div className="min-w-0">
+              <h1 className="truncate text-lg font-semibold tracking-tight">
+                FitAI Coach
+              </h1>
+              <p className="truncate text-sm text-slate-300/80">
+                AI Fitness and Nutrition
               </p>
             </div>
-          )}
+          ) : null}
         </div>
 
-        <nav className="mt-4 flex flex-col gap-1 px-3">
+        <nav className="flex-1 space-y-1 overflow-y-auto px-4 py-5">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
+              onClick={closeMobileSidebar}
+              title={collapsed ? item.label : null}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 hover:translate-x-1 ${
-                  isActive
-                    ? "bg-primary/20 text-primary"
-                    : "text-slate-300 hover:bg-white/5"
+                `sidebar-link ${collapsed ? "justify-center px-0" : ""} ${
+                  isActive ? "sidebar-link-active" : "sidebar-link-idle"
                 }`
               }
             >
-              <span>{item.icon}</span>
-              {item.label}
+              <span className="sidebar-link-icon">
+                <item.icon />
+              </span>
+              {!collapsed ? <span className="truncate">{item.label}</span> : null}
             </NavLink>
           ))}
         </nav>
-      </div>
 
-      <button
-        onClick={handleLogout}
-        className="mx-3 mb-6 px-4 py-3 rounded-lg text-sm font-medium text-red-400 hover:bg-red-500/10 transition text-left"
-      >
-        🚪 Log out
-      </button>
+        <div className="space-y-3 border-t border-white/10 px-4 py-4">
+          {!collapsed ? (
+            <button
+              type="button"
+              onClick={handleOpenProfile}
+              className="w-full rounded-3xl bg-white/5 px-4 py-4 text-left transition hover:bg-white/10"
+            >
+              <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                Account
+              </p>
+              <div className="mt-3 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold">
+                  {user?.name?.slice(0, 2)?.toUpperCase() || "AF"}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-white">
+                    {user?.name || "AI Fit User"}
+                  </p>
+                  <p className="truncate text-xs text-slate-300/80">
+                    {user?.email || "Signed in"}
+                  </p>
+                </div>
+                <ChevronRightIcon className="h-4 w-4 text-slate-500" />
+              </div>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleOpenProfile}
+              title="Profile"
+              className="sidebar-link sidebar-link-idle w-full justify-center px-0"
+            >
+              <span className="sidebar-link-icon">
+                <DetailsIcon />
+              </span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            title={collapsed ? "Log out" : null}
+            className={`sidebar-link sidebar-link-idle w-full ${
+              collapsed ? "justify-center px-0" : ""
+            }`}
+          >
+            <span className="sidebar-link-icon">
+              <LogoutIcon />
+            </span>
+            {!collapsed ? <span>Log Out</span> : null}
+          </button>
+        </div>
+      </div>
     </aside>
   );
 };

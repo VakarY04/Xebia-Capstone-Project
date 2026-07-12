@@ -4,27 +4,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Lime-green: energy, growth, "go" - the workout accent
         primary: {
-          DEFAULT: "#84cc16",
-          dark: "#65a30d",
-          light: "#a3e635",
+          DEFAULT: "#2563eb",
+          dark: "#1d4ed8",
+          light: "#60a5fa",
         },
-        // Warm amber: appetite, fuel, nutrition accent
         accent: {
           DEFAULT: "#f59e0b",
           dark: "#d97706",
           light: "#fbbf24",
         },
-        // Deep charcoal/slate base instead of pure navy - warmer, more "gym" than "tech"
         dark: {
-          DEFAULT: "#121212",
-          surface: "#1a1a1a",
-          card: "#1f1f1f",
+          DEFAULT: "#0f172a",
+          surface: "#020617",
+          card: "#111827",
+        },
+        surface: {
+          page: "#f5f7fb",
+          card: "#ffffff",
+          border: "#e2e8f0",
         },
       },
       fontFamily: {
-        display: ["'Segoe UI'", "system-ui", "sans-serif"],
+        display: ["'Outfit'", "'Manrope'", "system-ui", "sans-serif"],
+        sans: ["'Manrope'", "system-ui", "sans-serif"],
+      },
+      boxShadow: {
+        shell: "0 20px 60px rgba(15, 23, 42, 0.08)",
       },
       keyframes: {
         fadeInUp: {
@@ -35,15 +41,15 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
-        floatSlow: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
         },
       },
       animation: {
         fadeInUp: "fadeInUp 0.8s ease-out both",
         fadeIn: "fadeIn 1s ease-out both",
-        floatSlow: "floatSlow 4s ease-in-out infinite",
+        blink: "blink 1s step-end infinite",
       },
     },
   },

@@ -1,23 +1,23 @@
 import mongoose from "mongoose";
 
+const weeklyAvailabilitySchema = new mongoose.Schema(
+  {
+    weekNumber: { type: Number, required: true, min: 1, max: 4 },
+    days: { type: [String], default: [] },
+  },
+  { _id: false }
+);
+
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true },
-
-    // Tracks whether the user has completed the onboarding flow
     onboardingComplete: { type: Boolean, default: false },
-
-    // ---- Onboarding Step 1 ----
     gender: { type: String, enum: ["male", "female"], default: null },
-
-    // ---- Onboarding Step 2 ----
     age: { type: Number, default: null },
     heightCm: { type: Number, default: null },
     weightKg: { type: Number, default: null },
-
-    // ---- Onboarding Step 3 ----
     experienceLevel: {
       type: String,
       enum: ["beginner", "intermediate", "advanced"],
@@ -28,11 +28,13 @@ const userSchema = new mongoose.Schema(
       enum: ["lose_fat", "build_muscle", "get_stronger", "all", "other"],
       default: null,
     },
-
-    // ---- Onboarding Step 4 ----
-    injuriesOrConditions: { type: String, default: "" }, // free text, e.g. "knee pain"
+    injuriesOrConditions: { type: String, default: "" },
     availableDays: {
-      type: [String], // e.g. ["Monday", "Wednesday", "Friday"]
+      type: [String],
+      default: [],
+    },
+    weeklyAvailability: {
+      type: [weeklyAvailabilitySchema],
       default: [],
     },
     workoutLocation: {
@@ -40,11 +42,7 @@ const userSchema = new mongoose.Schema(
       enum: ["gym", "home"],
       default: null,
     },
-
-    // ---- Profile ----
-    avatar: { type: String, default: "" }, // base64 data URL of a small profile picture
-
-    // ---- Password reset ----
+    avatar: { type: String, default: "" },
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
   },
