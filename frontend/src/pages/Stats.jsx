@@ -324,7 +324,7 @@ const Stats = () => {
                   <XAxis dataKey="date" stroke={axisColor} fontSize={12} />
                   <YAxis stroke={axisColor} fontSize={12} domain={["auto", "auto"]} />
                   <Tooltip contentStyle={tooltipStyle} formatter={(value) => [`${value} kg`, "Weight"]} />
-                  <Line type="monotone" dataKey="weight" stroke="#7c5cff" strokeWidth={3} dot={{ r: 4, fill: "#7c5cff" }} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="weight" stroke="#2563eb" strokeWidth={3} dot={{ r: 4, fill: "#2563eb" }} activeDot={{ r: 6 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -380,7 +380,7 @@ const Stats = () => {
                   <Bar dataKey="calories" fill="#2563eb" radius={[8, 8, 0, 0]} />
                   <Bar dataKey="protein" fill="#f59e0b" radius={[8, 8, 0, 0]} />
                   <Bar dataKey="carbs" fill="#22c55e" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="fats" fill="#8b5cf6" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="fats" fill="#0ea5e9" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -392,3 +392,4 @@ const Stats = () => {
 };
 
 export default Stats;
+

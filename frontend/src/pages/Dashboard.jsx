@@ -167,7 +167,7 @@ const Dashboard = () => {
   }, [currentWeekDays, user, weeklyActivity]);
 
   const weeklyGoalRing = {
-    background: `conic-gradient(#7c5cff ${weeklyGoalPct}%, #ede9fe ${weeklyGoalPct}% 100%)`,
+    background: `conic-gradient(#2563eb ${weeklyGoalPct}%, #dbeafe ${weeklyGoalPct}% 100%)`,
   };
 
   const workoutPreview = todayPlanDay?.workout?.exercises?.slice(0, 4) || [];
@@ -218,7 +218,7 @@ const Dashboard = () => {
         />
         <MetricCard
           icon={<StreakIcon />}
-          iconTone="bg-violet-50 text-violet-600"
+          iconTone="bg-blue-50 text-blue-700"
           label="Current Streak"
           value={`${streak} day${streak === 1 ? "" : "s"}`}
           helper="Consecutive logged workout days"
@@ -261,7 +261,7 @@ const Dashboard = () => {
                   <XAxis dataKey="day" stroke="#64748b" fontSize={12} axisLine={false} tickLine={false} />
                   <YAxis hide domain={[0, 1]} />
                   <Tooltip
-                    cursor={{ fill: "rgba(124, 92, 255, 0.08)" }}
+                    cursor={{ fill: "rgba(37, 99, 235, 0.08)" }}
                     contentStyle={{
                       background: "#ffffff",
                       border: "1px solid #dbe4f0",
@@ -269,7 +269,7 @@ const Dashboard = () => {
                     }}
                     formatter={(value, _name, context) => [value ? "Workout completed" : "No workout logged", context?.payload?.dateLabel || ""]}
                   />
-                  <Bar dataKey="completed" fill="#7c5cff" radius={[10, 10, 0, 0]} maxBarSize={42} />
+                  <Bar dataKey="completed" fill="#2563eb" radius={[10, 10, 0, 0]} maxBarSize={42} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -396,3 +396,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
