@@ -86,7 +86,7 @@ const ReminderRow = ({ label, done, meta }) => (
     </div>
     <span
       className={`inline-flex shrink-0 items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${
-        done ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+        done ? "bg-primary/15 text-primary" : "bg-slate-100 text-slate-500"
       }`}
     >
       {done ? <CheckIcon className="h-3.5 w-3.5" /> : null}
@@ -167,7 +167,7 @@ const Dashboard = () => {
   }, [currentWeekDays, user, weeklyActivity]);
 
   const weeklyGoalRing = {
-    background: `conic-gradient(#2563eb ${weeklyGoalPct}%, #dbeafe ${weeklyGoalPct}% 100%)`,
+    background: `conic-gradient(#69C978 ${weeklyGoalPct}%, #3A3A3C ${weeklyGoalPct}% 100%)`,
   };
 
   const workoutPreview = todayPlanDay?.workout?.exercises?.slice(0, 4) || [];
@@ -197,28 +197,28 @@ const Dashboard = () => {
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <MetricCard
           icon={<FlameIcon />}
-          iconTone="bg-orange-50 text-orange-600"
+          iconTone="bg-primary/15 text-primary"
           label="Calories Today"
           value={todayPlanDay ? `${todayPlanDay.totalCalories} kcal` : "-"}
           helper={todayPlanDay?.dateKey ? `For ${formatDateLabel(todayPlanDay.dateKey)}` : "Generate a plan to see this"}
         />
         <MetricCard
           icon={<ProteinIcon />}
-          iconTone="bg-blue-50 text-blue-600"
+          iconTone="bg-primary/15 text-primary"
           label="Protein Today"
           value={todayPlanDay ? `${todayPlanDay.totalProtein} g` : "-"}
           helper="Pulled from your active meal plan"
         />
         <MetricCard
           icon={<WaterIcon />}
-          iconTone="bg-cyan-50 text-cyan-600"
+          iconTone="bg-primary/15 text-primary"
           label="Water Intake"
           value={`${todayWater.toFixed(1)} L`}
           helper="Daily hydration target: 2.5 L"
         />
         <MetricCard
           icon={<StreakIcon />}
-          iconTone="bg-blue-50 text-blue-700"
+          iconTone="bg-primary/15 text-primary"
           label="Current Streak"
           value={`${streak} day${streak === 1 ? "" : "s"}`}
           helper="Consecutive logged workout days"
@@ -257,19 +257,19 @@ const Dashboard = () => {
             <div className="h-[240px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={weeklyActivity} barGap={18}>
-                  <CartesianGrid stroke="#dbe4f0" strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="day" stroke="#64748b" fontSize={12} axisLine={false} tickLine={false} />
+                  <CartesianGrid stroke="#48484A" strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="day" stroke="#AEAEB2" fontSize={12} axisLine={false} tickLine={false} />
                   <YAxis hide domain={[0, 1]} />
                   <Tooltip
-                    cursor={{ fill: "rgba(37, 99, 235, 0.08)" }}
+                    cursor={{ fill: "rgba(105, 201, 120, 0.08)" }}
                     contentStyle={{
-                      background: "#ffffff",
-                      border: "1px solid #dbe4f0",
+                      background: "#2C2C2E",
+                      border: "1px solid #48484A",
                       borderRadius: 18,
                     }}
                     formatter={(value, _name, context) => [value ? "Workout completed" : "No workout logged", context?.payload?.dateLabel || ""]}
                   />
-                  <Bar dataKey="completed" fill="#2563eb" radius={[10, 10, 0, 0]} maxBarSize={42} />
+                  <Bar dataKey="completed" fill="#69C978" radius={[10, 10, 0, 0]} maxBarSize={42} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -396,4 +396,6 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
 

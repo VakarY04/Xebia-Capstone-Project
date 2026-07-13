@@ -155,13 +155,13 @@ const Stats = () => {
     }));
   }, [currentWeekDays]);
 
-  const axisColor = "#64748b";
-  const gridColor = "#dbe4f0";
+  const axisColor = "#AEAEB2";
+  const gridColor = "#48484A";
   const tooltipStyle = {
-    background: "#ffffff",
-    border: "1px solid #dbe4f0",
+    background: "#2C2C2E",
+    border: "1px solid #48484A",
     borderRadius: 18,
-    color: "#0f172a",
+    color: "#FFFFFF",
   };
 
   return (
@@ -324,7 +324,7 @@ const Stats = () => {
                   <XAxis dataKey="date" stroke={axisColor} fontSize={12} />
                   <YAxis stroke={axisColor} fontSize={12} domain={["auto", "auto"]} />
                   <Tooltip contentStyle={tooltipStyle} formatter={(value) => [`${value} kg`, "Weight"]} />
-                  <Line type="monotone" dataKey="weight" stroke="#2563eb" strokeWidth={3} dot={{ r: 4, fill: "#2563eb" }} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="weight" stroke="#69C978" strokeWidth={3} dot={{ r: 4, fill: "#69C978" }} activeDot={{ r: 6, fill: "#A8E6B1" }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -347,7 +347,7 @@ const Stats = () => {
                     contentStyle={tooltipStyle}
                     formatter={(value) => [`${value} exercise${value !== 1 ? "s" : ""}`, "Count"]}
                   />
-                  <Bar dataKey="count" fill="#3b82f6" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="count" fill="#69C978" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -377,10 +377,10 @@ const Stats = () => {
                       return [`${value} ${units}`, labels[name] || name];
                     }}
                   />
-                  <Bar dataKey="calories" fill="#2563eb" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="protein" fill="#f59e0b" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="carbs" fill="#22c55e" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="fats" fill="#0ea5e9" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="calories" fill="#69C978" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="protein" fill="#8BDB97" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="carbs" fill="#A8E6B1" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="fats" fill="#56B866" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -392,4 +392,5 @@ const Stats = () => {
 };
 
 export default Stats;
+
 

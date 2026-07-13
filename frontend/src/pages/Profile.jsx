@@ -96,7 +96,7 @@ const Profile = () => {
               className="hidden"
             />
 
-            <h2 className="mt-5 text-2xl font-semibold tracking-tight text-slate-950">{user?.name || "AI Fit User"}</h2>
+            <h2 className="mt-5 text-2xl font-semibold tracking-tight text-slate-950">{user?.name || "AI FIT User"}</h2>
             <p className="mt-1 text-sm font-medium text-slate-600">{user?.email}</p>
 
             {uploading ? (
@@ -174,3 +174,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

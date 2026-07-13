@@ -284,9 +284,9 @@ const MealPlan = () => {
                 </div>
               </div>
 
-              <MacroStat label="Protein" value={activeDayData?.totalProtein} unit="g" progressColor="#2563eb" />
-              <MacroStat label="Carbs" value={activeDayData?.totalCarbs} unit="g" progressColor="#f59e0b" />
-              <MacroStat label="Fats" value={activeDayData?.totalFats} unit="g" progressColor="#0ea5e9" />
+              <MacroStat label="Protein" value={activeDayData?.totalProtein} unit="g" progressColor="#69C978" />
+              <MacroStat label="Carbs" value={activeDayData?.totalCarbs} unit="g" progressColor="#8BDB97" />
+              <MacroStat label="Fats" value={activeDayData?.totalFats} unit="g" progressColor="#A8E6B1" />
             </div>
           </section>
 
@@ -386,3 +386,4 @@ const MealPlan = () => {
 };
 
 export default MealPlan;
+

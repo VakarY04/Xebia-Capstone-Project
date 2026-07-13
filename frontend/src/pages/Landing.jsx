@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import {
+  SparkleIcon,
+  ShieldIcon,
+  MealIcon,
+  ChartIcon,
+  SyncIcon,
+  HomeGymIcon,
+  LogoMark,
+} from "../components/AppIcons.jsx";
 
 const scrollTo = (id) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -7,111 +15,117 @@ const scrollTo = (id) => {
 
 const features = [
   {
-    icon: "AI",
+    Icon: SparkleIcon,
     title: "AI-Generated Plans",
     desc: "A full workout and meal plan shaped around your goals, experience level, and real schedule.",
     img: "/images/pushups-duo.jpg",
   },
   {
-    icon: "RX",
+    Icon: ShieldIcon,
     title: "Injury-Aware Training",
     desc: "Tell us about pain or limitations once, and the generated plan will work around them.",
     img: "/images/dumbbell-overhead.jpg",
   },
   {
-    icon: "MEAL",
+    Icon: MealIcon,
     title: "Meals That Match Your Goal",
-    desc: "Calories and macros adapt to fat loss, muscle gain, or general fitness without using a generic template.",
+    desc: "Calories and macros adapt to fat loss, muscle gain, or general fitness without a generic template.",
     img: "/images/healthy-bowl.jpg",
   },
   {
-    icon: "DATA",
+    Icon: ChartIcon,
     title: "Real Progress Stats",
     desc: "Log workouts, water, weight, and meal adherence, then see those changes reflected in the charts.",
     img: "/images/boxing-wrap.jpg",
   },
   {
-    icon: "SYNC",
+    Icon: SyncIcon,
     title: "Adapts With You",
     desc: "Update your details and weekly availability, then regenerate a plan that reflects your current life.",
     img: "/images/bicep-curl.jpg",
   },
   {
-    icon: "HOME",
+    Icon: HomeGymIcon,
     title: "Gym or Home",
     desc: "Whether you train with full equipment or minimal space, the plan is built for your setup.",
     img: "/images/fitness-still-life.jpg",
   },
 ];
 
-const heroParts = {
-  before: "Your Personal ",
-  highlight: "AI Coach",
-  after: " for Fitness & Nutrition",
-};
+const overlay = (from, to) =>
+  `linear-gradient(rgba(9,9,11,${from}), rgba(9,9,11,${to}))`;
 
-const fullHeroText = `${heroParts.before}${heroParts.highlight}${heroParts.after}`;
-const beforeLength = heroParts.before.length;
-const highlightLength = heroParts.highlight.length;
+const QuoteBanner = ({
+  img,
+  from,
+  to,
+  eyebrow,
+  eyebrowClass = "text-primary/90",
+  quote,
+  size = "text-2xl md:text-3xl",
+  maxW = "max-w-2xl",
+}) => (
+  <section
+    className="quote-banner px-6 py-24"
+    style={{
+      backgroundImage: `${overlay(from, to)}, url('${img}')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}
+  >
+    <div className={`mx-auto ${maxW} text-center`}>
+      {eyebrow ? (
+        <p
+          className={`mb-3 text-xs font-semibold uppercase tracking-[0.32em] ${eyebrowClass}`}
+        >
+          {eyebrow}
+        </p>
+      ) : null}
+      <p className={`${size} font-semibold italic leading-snug text-white`}>
+        {quote}
+      </p>
+    </div>
+  </section>
+);
 
 const Landing = () => {
-  const [visibleChars, setVisibleChars] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const finishedTyping = visibleChars === fullHeroText.length;
-    const finishedDeleting = visibleChars === 0;
-
-    const timeout = setTimeout(
-      () => {
-        if (!deleting && finishedTyping) {
-          setDeleting(true);
-          return;
-        }
-
-        if (deleting && finishedDeleting) {
-          setDeleting(false);
-          return;
-        }
-
-        setVisibleChars((prev) => prev + (deleting ? -1 : 1));
-      },
-      finishedTyping && !deleting ? 1400 : finishedDeleting && deleting ? 450 : deleting ? 40 : 80
-    );
-
-    return () => clearTimeout(timeout);
-  }, [deleting, visibleChars]);
-
-  const typedSegments = useMemo(() => {
-    const before = fullHeroText.slice(0, Math.min(visibleChars, beforeLength));
-    const highlight =
-      visibleChars > beforeLength
-        ? fullHeroText.slice(beforeLength, Math.min(visibleChars, beforeLength + highlightLength))
-        : "";
-    const after =
-      visibleChars > beforeLength + highlightLength
-        ? fullHeroText.slice(beforeLength + highlightLength, visibleChars)
-        : "";
-
-    return { before, highlight, after };
-  }, [visibleChars]);
-
   return (
     <div className="min-h-screen bg-dark text-white">
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
+      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-dark-surface/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <h1 className="text-2xl font-semibold tracking-tight text-white">
-            AI <span className="text-primary">Fit</span>
-          </h1>
+          <button
+            type="button"
+            onClick={() => scrollTo("home")}
+            className="flex items-center gap-3 text-left"
+          >
+            <LogoMark className="h-11 w-11 shrink-0" />
+            <div>
+              <p className="text-lg font-semibold uppercase tracking-[0.22em] text-white">
+                AI FIT
+              </p>
+              <p className="text-xs font-medium tracking-[0.18em] text-slate-300/80">
+                Fitness &amp; Nutrition
+              </p>
+            </div>
+          </button>
 
           <div className="hidden items-center gap-8 md:flex">
-            <button onClick={() => scrollTo("home")} className="text-sm font-semibold text-slate-200 transition hover:text-primary">
+            <button
+              onClick={() => scrollTo("home")}
+              className="text-sm font-semibold text-slate-200 transition hover:text-primary"
+            >
               Home
             </button>
-            <button onClick={() => scrollTo("features")} className="text-sm font-semibold text-slate-200 transition hover:text-primary">
+            <button
+              onClick={() => scrollTo("features")}
+              className="text-sm font-semibold text-slate-200 transition hover:text-primary"
+            >
               Features
             </button>
-            <button onClick={() => scrollTo("about")} className="text-sm font-semibold text-slate-200 transition hover:text-primary">
+            <button
+              onClick={() => scrollTo("about")}
+              className="text-sm font-semibold text-slate-200 transition hover:text-primary"
+            >
               About
             </button>
           </div>
@@ -126,168 +140,167 @@ const Landing = () => {
         id="home"
         className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-24 text-center"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(2,6,23,0.56), rgba(2,6,23,0.88)), url('/images/hero-barn-gym.jpg')",
+          backgroundImage: `${overlay(0.6, 0.9)}, url('/images/hero-barn-gym.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="mx-auto max-w-4xl">
-          <p className="animate-fadeInUp text-sm font-semibold uppercase tracking-[0.34em] text-primary/90">
+        <div className="glow-blob -left-24 top-16 h-72 w-72 bg-primary/25 animate-floatSlow" />
+        <div className="glow-blob -right-16 bottom-24 h-80 w-80 bg-accent/20 animate-floatSlower" />
+
+        <div className="relative mx-auto max-w-4xl animate-revealUp">
+          <span className="eyebrow-badge">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-pulseDot rounded-full bg-primary" />
+            </span>
             Smart fitness planning
-          </p>
-          <h2 className="mt-6 min-h-[8rem] text-4xl font-semibold leading-tight text-white md:min-h-[10rem] md:text-6xl">
-            <span>{typedSegments.before}</span>
-            <span className="text-primary">{typedSegments.highlight}</span>
-            <span>{typedSegments.after}</span>
-            <span className="typing-caret" />
+          </span>
+
+          <h2 className="mt-7 text-4xl font-semibold leading-tight text-white md:text-6xl">
+            Your Personal <span className="hero-gradient-text animate-gradientPan">AI Coach</span>
+            <br className="hidden md:block" /> for Fitness &amp; Nutrition
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg font-medium text-slate-200 animate-fadeInUp" style={{ animationDelay: "0.15s" }}>
+
+          <p
+            className="mx-auto mt-6 max-w-2xl text-lg font-medium text-slate-300 animate-revealUp"
+            style={{ animationDelay: "0.15s" }}
+          >
             Plans, meals, and weekly scheduling that respond to your goals, your busy weeks, and the progress you actually log.
           </p>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row animate-fadeInUp" style={{ animationDelay: "0.3s" }}>
+          <div
+            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row animate-revealUp"
+            style={{ animationDelay: "0.3s" }}
+          >
             <Link to="/signup" className="btn-primary px-8 py-3 text-lg">
               Start Your Journey
             </Link>
             <button
               type="button"
               onClick={() => scrollTo("features")}
-              className="rounded-2xl border border-white/20 bg-white/10 px-8 py-3 text-lg font-semibold text-white transition-all duration-200 hover:-translate-y-1 hover:bg-white/15"
+              className="rounded-2xl border border-white/15 bg-white/5 px-8 py-3 text-lg font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-1 hover:bg-white/10"
             >
               Explore Features
             </button>
           </div>
 
-          <p className="mt-14 text-sm font-medium text-slate-400 animate-fadeIn" style={{ animationDelay: "0.6s" }}>
+          <p
+            className="mt-14 text-sm font-medium text-slate-500 animate-fadeIn"
+            style={{ animationDelay: "0.6s" }}
+          >
             Scroll to explore
           </p>
         </div>
       </section>
 
-      <section
-        className="quote-banner px-6 py-20"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(2,6,23,0.48), rgba(2,6,23,0.82)), url('/images/kettlebell-silhouette.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.32em] text-primary/90">
-            Workout Motivation
+      <QuoteBanner
+        img="/images/kettlebell-silhouette.jpg"
+        from={0.5}
+        to={0.85}
+        eyebrow="Workout Motivation"
+        quote='"Discipline is choosing between what you want now and what you want most."'
+      />
+
+      <section id="features" className="mx-auto max-w-6xl px-6 py-28">
+        <div className="mb-16 text-center">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.32em] text-primary">
+            Features
           </p>
-          <p className="text-2xl font-semibold italic leading-snug text-white md:text-3xl">
-            "Discipline is choosing between what you want now and what you want most."
+          <h3 className="text-3xl font-semibold text-white md:text-4xl">
+            Everything you need, built by AI
+          </h3>
+          <p className="mx-auto mt-4 max-w-xl text-sm font-medium text-slate-400">
+            Plan, meals, tracking, and scheduling all shaped around one profile.
           </p>
         </div>
-      </section>
 
-      <section id="features" className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-14 text-center">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.32em] text-primary">Features</p>
-          <h3 className="text-3xl font-semibold text-white md:text-4xl">Everything you need, built by AI</h3>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {features.map((feature) => (
-            <div key={feature.title} className="interactive-card overflow-hidden rounded-[28px] border border-white/10 bg-dark-card">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map(({ Icon, title, desc, img }) => (
+            <div
+              key={title}
+              className="interactive-card group overflow-hidden rounded-[28px] border border-white/10 bg-dark-card"
+            >
               <div
-                className="h-40 bg-cover bg-center transition-transform duration-500 hover:scale-105"
-                style={{
-                  backgroundImage: `linear-gradient(rgba(2,6,23,0.25), rgba(2,6,23,0.82)), url('${feature.img}')`,
-                }}
+                className="h-36 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                style={{ backgroundImage: `${overlay(0.25, 0.82)}, url('${img}')` }}
               />
               <div className="p-6">
-                <div className="mb-4 inline-flex rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-                  {feature.icon}
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 text-primary">
+                  <Icon className="h-5 w-5" />
                 </div>
-                <h4 className="mb-2 text-xl font-semibold text-white">{feature.title}</h4>
-                <p className="text-sm font-medium leading-relaxed text-slate-300">{feature.desc}</p>
+                <h4 className="mb-2 text-lg font-semibold text-white">{title}</h4>
+                <p className="text-sm font-medium leading-relaxed text-slate-400">{desc}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section
-        className="quote-banner px-6 py-20"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(2,6,23,0.55), rgba(2,6,23,0.84)), url('/images/healthy-bowl.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.32em] text-accent-light">
-            Nutrition Motivation
-          </p>
-          <p className="text-2xl font-semibold italic leading-snug text-white md:text-3xl">
-            "Every meal is a chance to nourish the body you are building."
-          </p>
-        </div>
-      </section>
+      <QuoteBanner
+        img="/images/healthy-bowl.jpg"
+        from={0.55}
+        to={0.85}
+        eyebrow="Nutrition Motivation"
+        eyebrowClass="text-accent-light"
+        quote='"Every meal is a chance to nourish the body you are building."'
+      />
 
-      <section
-        className="quote-banner px-6 py-24"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(2,6,23,0.30), rgba(2,6,23,0.76)), url('/images/worry-less-run-more.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="mx-auto max-w-lg text-center">
-          <p className="text-xl font-semibold italic text-white md:text-2xl">
-            Keep moving. Your future self is already proud of you.
-          </p>
-        </div>
-      </section>
+      <QuoteBanner
+        img="/images/worry-less-run-more.jpg"
+        from={0.32}
+        to={0.78}
+        quote="Keep moving. Your future self is already proud of you."
+        size="text-xl md:text-2xl"
+        maxW="max-w-lg"
+      />
 
       <section
         id="about"
-        className="relative border-t border-white/5 px-6 py-24"
+        className="relative border-t border-white/5 px-6 py-28"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(2,6,23,0.88), rgba(2,6,23,0.92)), url('/images/dont-give-up.jpg')",
+          backgroundImage: `${overlay(0.88, 0.94)}, url('/images/dont-give-up.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.32em] text-primary">About Us</p>
-          <h3 className="mb-6 text-3xl font-semibold text-white md:text-4xl">Why AI Fit exists</h3>
-          <p className="mb-4 font-medium leading-relaxed text-slate-200">
-            Generic workout plans and cookie-cutter meal templates do not account for your injuries, your schedule, or how your goals change over time. AI Fit was built to fix that by creating a coach that actually reads your profile and builds a plan around you.
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.32em] text-primary">
+            About Us
           </p>
-          <p className="font-medium leading-relaxed text-slate-200">
+          <h3 className="mb-6 text-3xl font-semibold text-white md:text-4xl">
+            Why AI FIT exists
+          </h3>
+          <p className="mb-4 font-medium leading-relaxed text-slate-300">
+            Generic workout plans and cookie-cutter meal templates do not account for your injuries, your schedule, or how your goals change over time. AI FIT was built to fix that by creating a coach that reads your profile and builds a plan around you.
+          </p>
+          <p className="font-medium leading-relaxed text-slate-300">
             Tell us who you are once. Update it whenever life changes. Get a fresh plan every time, backed by progress tracking that shows what is actually working.
           </p>
         </div>
       </section>
 
       <section
-        className="quote-banner px-6 py-24 text-center"
+        className="px-6 py-24 text-center"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(2,6,23,0.74), rgba(2,6,23,0.90)), url('/images/be-fit-food.jpg')",
+          backgroundImage: `${overlay(0.76, 0.92)}, url('/images/be-fit-food.jpg')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <h3 className="mb-6 text-3xl font-semibold text-white md:text-4xl">Ready to Be Fit?</h3>
+        <h3 className="mb-6 text-3xl font-semibold text-white md:text-4xl">
+          Ready to train with AI FIT?
+        </h3>
         <Link to="/signup" className="btn-primary inline-flex px-8 py-3 text-lg">
           Get Started Free
         </Link>
       </section>
 
-      <footer className="border-t border-white/5 py-8 text-center text-sm font-medium text-slate-500">
-        AI <span className="text-primary">Fit</span> built for your goals.
+      <footer className="border-t border-white/5 bg-dark-surface py-8 text-center text-sm font-medium text-slate-500">
+        AI FIT built for your goals.
       </footer>
     </div>
   );
 };
 
 export default Landing;
+

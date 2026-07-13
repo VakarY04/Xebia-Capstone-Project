@@ -15,23 +15,13 @@ const IconWrap = ({ children, className = "w-5 h-5" }) => (
 
 export const LogoMark = ({ className = "w-10 h-10" }) => (
   <div
-    className={`rounded-2xl bg-gradient-to-br from-primary via-primary to-primary-dark text-white shadow-lg shadow-primary/30 ${className}`}
+    className={`overflow-hidden rounded-full border border-white/10 bg-dark-surface shadow-[0_18px_40px_rgba(0,0,0,0.32)] ${className}`}
   >
-    <svg
-      viewBox="0 0 48 48"
-      fill="none"
-      className="w-full h-full p-2.5"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="24" cy="24" r="18" opacity="0.28" />
-      <path d="M24 11v9" />
-      <path d="M19.5 15.5h9" />
-      <path d="M15.5 33.5c1.8-5 4.9-7.5 8.5-7.5s6.7 2.5 8.5 7.5" />
-      <path d="M18 22c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-    </svg>
+    <img
+      src="/images/ai-fit-logo.png"
+      alt="AI FIT logo"
+      className="h-full w-full object-cover"
+    />
   </div>
 );
 
@@ -182,6 +172,36 @@ export const LogoutIcon = () => (
     <path d="M10 17v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" />
     <path d="m14 16 4-4-4-4" />
     <path d="M9 12h9" />
+  </IconWrap>
+);
+
+export const SparkleIcon = ({ className = "w-5 h-5" }) => (
+  <IconWrap className={className}>
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
+    <path d="M12 8a4 4 0 0 0 4 4 4 4 0 0 0-4 4 4 4 0 0 0-4-4 4 4 0 0 0 4-4Z" />
+  </IconWrap>
+);
+
+export const ShieldIcon = ({ className = "w-5 h-5" }) => (
+  <IconWrap className={className}>
+    <path d="M12 3.5 5 6v5.5c0 4.2 2.9 7.4 7 9 4.1-1.6 7-4.8 7-9V6l-7-2.5Z" />
+    <path d="M9 12.2l2 2 4-4.2" />
+  </IconWrap>
+);
+
+export const SyncIcon = ({ className = "w-5 h-5" }) => (
+  <IconWrap className={className}>
+    <path d="M4 12a8 8 0 0 1 13.66-5.66L20 8" />
+    <path d="M20 4v4h-4" />
+    <path d="M20 12a8 8 0 0 1-13.66 5.66L4 16" />
+    <path d="M4 20v-4h4" />
+  </IconWrap>
+);
+
+export const HomeGymIcon = ({ className = "w-5 h-5" }) => (
+  <IconWrap className={className}>
+    <path d="M3 10.5 12 4l9 6.5" />
+    <path d="M5.5 9.5V19a1 1 0 0 0 1 1H9v-5h6v5h2.5a1 1 0 0 0 1-1V9.5" />
   </IconWrap>
 );
 

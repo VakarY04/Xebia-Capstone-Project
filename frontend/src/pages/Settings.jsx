@@ -271,7 +271,7 @@ const Settings = () => {
               />
 
               <h2 className="mt-5 text-2xl font-semibold tracking-tight text-slate-950">
-                {user?.name || "AI Fit User"}
+                {user?.name || "AI FIT User"}
               </h2>
               <p className="mt-1 text-sm text-slate-500">
                 {user?.experienceLevel
@@ -517,3 +517,4 @@ const Settings = () => {
 };
 
 export default Settings;
+

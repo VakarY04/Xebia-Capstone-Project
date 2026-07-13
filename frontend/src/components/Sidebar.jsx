@@ -38,7 +38,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/10 bg-slate-950 text-white shadow-[0_24px_80px_rgba(15,23,42,0.38)] transition-all duration-300 ${
+      className={`fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/10 bg-dark-surface text-white shadow-[0_24px_80px_rgba(0,0,0,0.38)] transition-all duration-300 ${
         collapsed ? "w-24" : "w-72"
       } ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
     >
@@ -47,11 +47,11 @@ const Sidebar = () => {
           <LogoMark className="h-12 w-12 shrink-0" />
           {!collapsed ? (
             <div className="min-w-0">
-              <h1 className="truncate text-lg font-semibold tracking-tight">
-                FitAI Coach
+              <h1 className="truncate text-lg font-semibold uppercase tracking-[0.24em] text-white">
+                AI FIT
               </h1>
               <p className="truncate text-sm text-slate-300/80">
-                AI Fitness and Nutrition
+                Fitness &amp; Nutrition
               </p>
             </div>
           ) : null}
@@ -94,7 +94,7 @@ const Sidebar = () => {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-white">
-                    {user?.name || "AI Fit User"}
+                    {user?.name || "AI FIT User"}
                   </p>
                   <p className="truncate text-xs text-slate-300/80">
                     {user?.email || "Signed in"}
