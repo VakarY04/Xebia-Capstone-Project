@@ -178,7 +178,8 @@ export const generatePlan = async (req, res) => {
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.7,
+          temperature: 0.5,
+          maxOutputTokens: 8192,
           responseMimeType: "application/json",
         },
       }),
