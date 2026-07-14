@@ -1,4 +1,54 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+/* Cabinet Grotesk - self-hosted, licensed free for commercial + personal use (Fontshare/ITF).
+   One family name across weights so Tailwind's font-weight utilities (font-medium,
+   font-semibold, font-bold, etc.) automatically pick the matching weight file. */
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/fonts/CabinetGrotesk-Light.woff2") format("woff2"),
+       url("/fonts/CabinetGrotesk-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/fonts/CabinetGrotesk-Regular.woff2") format("woff2"),
+       url("/fonts/CabinetGrotesk-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/fonts/CabinetGrotesk-Medium.woff2") format("woff2"),
+       url("/fonts/CabinetGrotesk-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/fonts/CabinetGrotesk-Bold.woff2") format("woff2"),
+       url("/fonts/CabinetGrotesk-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/fonts/CabinetGrotesk-Extrabold.woff2") format("woff2"),
+       url("/fonts/CabinetGrotesk-Extrabold.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cabinet Grotesk";
+  src: url("/fonts/CabinetGrotesk-Black.woff2") format("woff2"),
+       url("/fonts/CabinetGrotesk-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -28,7 +78,7 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Cabinet Grotesk", "Times New Roman", Times, serif;
   background:
     radial-gradient(circle at top, rgba(105, 201, 120, 0.1), transparent 28%),
     linear-gradient(180deg, #202022 0%, var(--app-bg) 100%);
@@ -40,7 +90,7 @@ button,
 input,
 select,
 textarea {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Cabinet Grotesk", "Times New Roman", Times, serif;
 }
 
 h1,
@@ -49,7 +99,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Cabinet Grotesk", "Times New Roman", Times, serif;
   font-weight: 400;
 }
 
@@ -138,7 +188,7 @@ select option {
   }
 
   .card-light {
-    @apply rounded-[28px] border transition-all duration-300 hover:-translate-y-1;
+    @apply rounded-[21px] border transition-all duration-300 hover:-translate-y-1;
     border-color: var(--app-border);
     background: linear-gradient(180deg, rgba(44, 44, 46, 0.98) 0%, rgba(36, 36, 38, 0.98) 100%);
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.26);

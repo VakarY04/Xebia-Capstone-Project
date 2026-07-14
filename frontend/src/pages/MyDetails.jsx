@@ -152,7 +152,7 @@ const MyDetails = () => {
       />
 
       {savedMsg ? (
-        <p className="mt-6 rounded-[26px] border border-primary/20 bg-primary/5 px-4 py-3 text-sm font-medium text-primary">
+        <p className="mt-6 rounded-[20px] border border-primary/20 bg-primary/5 px-4 py-3 text-sm font-medium text-primary">
           {savedMsg}
         </p>
       ) : null}
@@ -268,7 +268,7 @@ const MyDetails = () => {
                 return (
                   <div
                     key={weekNumber}
-                    className={`rounded-[24px] border bg-white p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
+                    className={`rounded-[18px] border bg-white p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${
                       activeWeek === weekNumber ? "border-primary shadow-md shadow-primary/10" : "border-slate-200"
                     }`}
                   >

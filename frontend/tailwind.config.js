@@ -2,6 +2,21 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
+    // Overrides (not extends) Tailwind's default border-radius scale: every
+    // rounded-* utility across the whole project is 25% smaller than the
+    // Tailwind default. "full" is left untouched since it produces true
+    // circles/pills, not square-cornered rectangles.
+    borderRadius: {
+      none: "0px",
+      sm: "1.5px",
+      DEFAULT: "3px",
+      md: "4.5px",
+      lg: "6px",
+      xl: "9px",
+      "2xl": "12px",
+      "3xl": "18px",
+      full: "9999px",
+    },
     extend: {
       colors: {
         primary: {
@@ -26,8 +41,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ["'Inter'", "system-ui", "sans-serif"],
-        sans: ["'Inter'", "system-ui", "sans-serif"],
+        display: ["'Cabinet Grotesk'", "'Times New Roman'", "Times", "serif"],
+        sans: ["'Cabinet Grotesk'", "'Times New Roman'", "Times", "serif"],
       },
       boxShadow: {
         shell: "0 20px 60px rgba(0, 0, 0, 0.35)",

@@ -138,15 +138,6 @@ const Settings = () => {
     return { workoutsCompleted, daysActive, streak };
   }, [logs, summarizedLogs]);
 
-  const bmi = useMemo(() => {
-    if (!user?.heightCm || !user?.weightKg) {
-      return null;
-    }
-
-    const heightMeters = user.heightCm / 100;
-    return (user.weightKg / (heightMeters * heightMeters)).toFixed(1);
-  }, [user]);
-
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -232,7 +223,7 @@ const Settings = () => {
         subtitle="Manage your profile, progress context, and account actions."
       />
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[360px_minmax(0,1fr)_340px]">
+      <div className="mt-6 grid gap-6 xl:grid-cols-[360px_minmax(0,1fr)]">
         <div className="space-y-6">
           <section className="app-grid-panel overflow-hidden p-0">
             <div className="h-28 bg-gradient-to-r from-primary via-primary-light to-primary-dark" />
@@ -241,7 +232,7 @@ const Settings = () => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="group relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-[30px] border-4 border-white bg-slate-100 text-3xl font-semibold text-slate-700 shadow-lg"
+                  className="group relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-[23px] border-4 border-white bg-slate-100 text-3xl font-semibold text-slate-700 shadow-lg"
                 >
                   {user?.avatar ? (
                     <img src={user.avatar} alt="Profile" className="h-full w-full object-cover" />
@@ -328,78 +319,6 @@ const Settings = () => {
 
         <div className="space-y-6">
           <section className="app-grid-panel">
-            <h2 className="app-section-title">Profile Overview</h2>
-            <p className="app-section-subtitle">The fields below drive your plan generation and dashboard recommendations.</p>
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <div className="app-info-tile">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Goal</p>
-                <p className="mt-3 text-lg font-semibold text-slate-950">{user?.goal || "-"}</p>
-              </div>
-              <div className="app-info-tile">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Workout location</p>
-                <p className="mt-3 text-lg font-semibold text-slate-950">{user?.workoutLocation || "-"}</p>
-              </div>
-              <div className="app-info-tile md:col-span-2">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Available days</p>
-                <p className="mt-3 text-lg font-semibold text-slate-950">
-                  {user?.availableDays?.length ? user.availableDays.join(", ") : "-"}
-                </p>
-              </div>
-              <div className="app-info-tile md:col-span-2">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Injuries or conditions</p>
-                <p className="mt-3 text-sm font-medium leading-6 text-slate-700">
-                  {user?.injuriesOrConditions || "None recorded"}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="app-grid-panel">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <h2 className="app-section-title">Body Stats</h2>
-                <p className="app-section-subtitle">Keep these updated for more useful recommendations and plan regeneration.</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => navigate("/my-details")}
-                className="text-sm font-semibold text-primary transition hover:text-primary-dark"
-              >
-                Update
-              </button>
-            </div>
-
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="app-info-tile">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Height</p>
-                <p className="mt-3 text-2xl font-semibold tracking-tight text-slate-950">
-                  {user?.heightCm ? `${user.heightCm} cm` : "-"}
-                </p>
-              </div>
-              <div className="app-info-tile">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Weight</p>
-                <p className="mt-3 text-2xl font-semibold tracking-tight text-slate-950">
-                  {user?.weightKg ? `${user.weightKg} kg` : "-"}
-                </p>
-              </div>
-              <div className="app-info-tile">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">BMI</p>
-                <p className="mt-3 text-2xl font-semibold tracking-tight text-slate-950">
-                  {bmi || "-"}
-                </p>
-              </div>
-              <div className="app-info-tile">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Onboarding</p>
-                <p className="mt-3 text-2xl font-semibold tracking-tight text-slate-950">
-                  {user?.onboardingComplete ? "Done" : "Pending"}
-                </p>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div className="space-y-6">
-          <section className="app-grid-panel">
             <h2 className="app-section-title">Account Actions</h2>
             <p className="app-section-subtitle">Security and session management stay here.</p>
             <div className="mt-6 space-y-3">
@@ -416,7 +335,7 @@ const Settings = () => {
             </div>
 
             {showPasswordForm ? (
-              <form onSubmit={handleChangePassword} className="mt-4 space-y-3 rounded-[28px] bg-slate-50 p-4">
+              <form onSubmit={handleChangePassword} className="mt-4 space-y-3 rounded-[21px] bg-slate-50 p-4">
                 {pwError ? (
                   <div className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-600">
                     {pwError}
@@ -477,7 +396,7 @@ const Settings = () => {
                 />
               </div>
             ) : (
-              <div className="mt-6 rounded-[28px] border border-red-200 bg-red-50 p-4">
+              <div className="mt-6 rounded-[21px] border border-red-200 bg-red-50 p-4">
                 <p className="text-sm font-medium text-red-700">
                   This deletes your account, plans, and logs permanently. Type DELETE to confirm.
                 </p>

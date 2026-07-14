@@ -72,7 +72,7 @@ const Profile = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="group relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-[30px] border-4 border-white bg-slate-100 text-3xl font-semibold text-slate-700 shadow-lg"
+                className="group relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-[23px] border-4 border-white bg-slate-100 text-3xl font-semibold text-slate-700 shadow-lg"
               >
                 {user?.avatar ? (
                   <img src={user.avatar} alt="Profile" className="h-full w-full object-cover" />

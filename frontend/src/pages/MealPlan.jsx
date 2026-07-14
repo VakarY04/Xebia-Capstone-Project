@@ -194,7 +194,7 @@ const MealPlan = () => {
       </section>
 
       {error ? (
-        <div className="mt-6 rounded-[26px] border border-red-200 bg-red-50 px-5 py-4 text-sm font-medium text-red-700">
+        <div className="mt-6 rounded-[20px] border border-red-200 bg-red-50 px-5 py-4 text-sm font-medium text-red-700">
           {error}
         </div>
       ) : null}
@@ -256,7 +256,7 @@ const MealPlan = () => {
                   key={day.dateKey}
                   type="button"
                   onClick={() => setActiveDayKey(day.dateKey)}
-                  className={`pill-light min-w-[108px] flex-col items-start gap-1 rounded-[22px] px-4 py-3 text-left ${
+                  className={`pill-light min-w-[108px] flex-col items-start gap-1 rounded-[17px] px-4 py-3 text-left ${
                     activeDayKey === day.dateKey ? "pill-light-selected" : "pill-light-unselected"
                   }`}
                 >
@@ -305,7 +305,7 @@ const MealPlan = () => {
               </div>
 
               {activeDayData?.isRestDay ? (
-                <div className="mt-6 rounded-[28px] bg-slate-50 p-6 text-sm font-medium text-slate-700">
+                <div className="mt-6 rounded-[21px] bg-slate-50 p-6 text-sm font-medium text-slate-700">
                   This date is intentionally lighter. Mobility work, stretching, and a short walk fit well here.
                 </div>
               ) : (
@@ -373,7 +373,7 @@ const MealPlan = () => {
                 <button type="button" onClick={handleGenerate} disabled={generating} className="btn-primary w-full">
                   {generating ? "Generating..." : `Generate ${durationWeeks} Week Plan`}
                 </button>
-                <div className="rounded-[26px] bg-slate-50 px-4 py-4 text-sm font-medium text-slate-600">
+                <div className="rounded-[20px] bg-slate-50 px-4 py-4 text-sm font-medium text-slate-600">
                   Current plan span: {plan.startDate} to {plan.days?.[plan.days.length - 1]?.dateKey || plan.startDate}.
                 </div>
               </div>

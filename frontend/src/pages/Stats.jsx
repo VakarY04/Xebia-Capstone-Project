@@ -250,7 +250,7 @@ const Stats = () => {
               )}
             </div>
 
-            <div className="rounded-[26px] bg-slate-50 px-4 py-4 text-sm font-medium text-slate-700 md:col-span-1 xl:col-span-2">
+            <div className="rounded-[20px] bg-slate-50 px-4 py-4 text-sm font-medium text-slate-700 md:col-span-1 xl:col-span-2">
               {selectedPlanDay
                 ? `Logging ${selectedPlanDay.day}, ${formatDateLabel(selectedPlanDay.dateKey, { month: "long", day: "numeric" })}. ${selectedPlanDay.isRestDay ? "This is a planned recovery day." : `Workout focus: ${selectedPlanDay.workout?.focus || "Active session"}.`}`
                 : "Choose a date or generate a plan to align your logs with the calendar."}

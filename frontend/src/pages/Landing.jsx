@@ -218,7 +218,7 @@ const Landing = () => {
           {features.map(({ Icon, title, desc, img }) => (
             <div
               key={title}
-              className="interactive-card group overflow-hidden rounded-[28px] border border-white/10 bg-dark-card"
+              className="interactive-card group overflow-hidden rounded-[21px] border border-white/10 bg-dark-card"
             >
               <div
                 className="h-36 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"

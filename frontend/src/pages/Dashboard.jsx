@@ -18,7 +18,6 @@ import {
   ProteinIcon,
   StreakIcon,
   WaterIcon,
-  WorkoutIcon,
 } from "../components/AppIcons.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import {
@@ -102,6 +101,7 @@ const Dashboard = () => {
   const [plan, setPlan] = useState(null);
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedWeek, setSelectedWeek] = useState(null);
 
   useEffect(() => {
     const load = async () => {
@@ -120,8 +120,13 @@ const Dashboard = () => {
 
   const planWeeks = useMemo(() => groupPlanWeeks(plan), [plan]);
   const activeWeek = useMemo(() => getDefaultActiveWeek(plan), [plan]);
+  // The week the user is currently viewing in Activity Overview - defaults to
+  // today's week, but can be changed with the week selector below.
+  const viewedWeek = selectedWeek && planWeeks.some((week) => week.weekNumber === selectedWeek)
+    ? selectedWeek
+    : activeWeek;
   const currentWeekDays =
-    planWeeks.find((week) => week.weekNumber === activeWeek)?.days || [];
+    planWeeks.find((week) => week.weekNumber === viewedWeek)?.days || [];
   const activeDayKey = getDefaultActiveDayKey(plan);
   const todayPlanDay = plan?.days?.find((day) => day.dateKey === activeDayKey);
 
@@ -170,7 +175,6 @@ const Dashboard = () => {
     background: `conic-gradient(#69C978 ${weeklyGoalPct}%, #3A3A3C ${weeklyGoalPct}% 100%)`,
   };
 
-  const workoutPreview = todayPlanDay?.workout?.exercises?.slice(0, 4) || [];
   const greetingHour = new Date().getHours();
   const greeting =
     greetingHour < 12 ? "morning" : greetingHour < 18 ? "afternoon" : "evening";
@@ -231,12 +235,31 @@ const Dashboard = () => {
             <div>
               <h2 className="app-section-title">Activity Overview</h2>
               <p className="app-section-subtitle">
-                {plan ? `Week ${activeWeek} of your active plan` : "Generate a plan to populate weekly activity"}
+                {plan ? `Week ${viewedWeek} of your active plan` : "Generate a plan to populate weekly activity"}
               </p>
             </div>
-            <span className="rounded-2xl bg-slate-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
-              {plan ? `Week ${activeWeek}` : "No plan"}
-            </span>
+            {planWeeks.length > 1 ? (
+              <div className="flex items-center gap-1 rounded-2xl bg-slate-50 p-1">
+                {planWeeks.map((week) => (
+                  <button
+                    key={week.weekNumber}
+                    type="button"
+                    onClick={() => setSelectedWeek(week.weekNumber)}
+                    className={`rounded-xl px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] transition ${
+                      viewedWeek === week.weekNumber
+                        ? "bg-primary text-slate-950"
+                        : "text-slate-500 hover:text-slate-800"
+                    }`}
+                  >
+                    Wk {week.weekNumber}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <span className="rounded-2xl bg-slate-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
+                {plan ? `Week ${viewedWeek}` : "No plan"}
+              </span>
+            )}
           </div>
 
           <div className="mt-8 grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-center">
@@ -310,69 +333,10 @@ const Dashboard = () => {
               />
             </div>
           </section>
-
-          <section className="app-grid-panel">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <h2 className="app-section-title">Today&apos;s Workout</h2>
-                <p className="app-section-subtitle">
-                  {todayPlanDay?.dateKey ? formatDateLabel(todayPlanDay.dateKey, { weekday: "long", month: "short", day: "numeric" }) : "No active plan yet"}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => navigate("/meal-plan")}
-                className="text-sm font-semibold text-primary transition hover:text-primary-dark"
-              >
-                View full plan
-              </button>
-            </div>
-
-            {!plan ? (
-              <div className="mt-6 rounded-3xl bg-slate-50 p-5 text-sm font-medium text-slate-600">
-                No plan yet. Go to Workout and Meals to generate your first plan.
-              </div>
-            ) : todayPlanDay?.isRestDay ? (
-              <div className="mt-6 rounded-3xl bg-slate-50 p-5 text-sm font-medium text-slate-700">
-                Today is marked as recovery. A short walk, stretching, or mobility session fits the plan.
-              </div>
-            ) : (
-              <div className="mt-6 space-y-5">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                    <WorkoutIcon />
-                    Workout Focus
-                  </div>
-                  <h3 className="mt-4 text-2xl font-semibold tracking-tight text-slate-950">
-                    {todayPlanDay?.workout?.focus || "Training Day"}
-                  </h3>
-                  <p className="mt-2 text-sm font-medium text-slate-600">
-                    {todayPlanDay?.workout?.exercises?.length || 0} planned exercises for this day.
-                  </p>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                  {workoutPreview.map((exercise) => (
-                    <div key={exercise.name} className="app-subtle-panel min-w-0 p-4">
-                      <p className="break-words text-sm font-semibold text-slate-900">
-                        {exercise.name}
-                      </p>
-                      <p className="mt-1 text-xs font-medium text-slate-600">
-                        {exercise.muscleGroup}
-                      </p>
-                      <p className="mt-3 text-sm font-medium text-slate-700">
-                        {exercise.sets} x {exercise.reps}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
         </div>
       </div>
 
-      <section className="mt-6 rounded-[30px] bg-slate-950 px-6 py-5 text-white shadow-shell">
+      <section className="mt-6 rounded-[23px] bg-slate-950 px-6 py-5 text-white shadow-shell">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.26em] text-slate-400">

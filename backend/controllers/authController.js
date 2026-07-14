@@ -40,9 +40,7 @@ export const signup = async (req, res) => {
 };
 
 // @route POST /api/auth/forgot-password
-// Always responds with a generic success message, whether or not the email
-// exists - this prevents attackers from using this endpoint to check which
-// emails are registered.
+
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;

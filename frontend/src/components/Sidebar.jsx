@@ -89,8 +89,12 @@ const Sidebar = () => {
                 Account
               </p>
               <div className="mt-3 flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold">
-                  {user?.name?.slice(0, 2)?.toUpperCase() || "AF"}
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/10 text-sm font-semibold">
+                  {user?.avatar ? (
+                    <img src={user.avatar} alt="Profile" className="h-full w-full object-cover" />
+                  ) : (
+                    user?.name?.slice(0, 2)?.toUpperCase() || "AF"
+                  )}
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-white">
@@ -110,8 +114,12 @@ const Sidebar = () => {
               title="Profile"
               className="sidebar-link sidebar-link-idle w-full justify-center px-0"
             >
-              <span className="sidebar-link-icon">
-                <DetailsIcon />
+              <span className="sidebar-link-icon overflow-hidden rounded-full">
+                {user?.avatar ? (
+                  <img src={user.avatar} alt="Profile" className="h-full w-full object-cover" />
+                ) : (
+                  <DetailsIcon />
+                )}
               </span>
             </button>
           )}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import { LogoMark } from "../components/AppIcons.jsx";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -29,7 +30,14 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-dark px-4">
+      <Link to="/" className="mb-6 flex flex-col items-center gap-3">
+        <LogoMark className="w-14 h-14" />
+        <span className="text-xl font-semibold uppercase tracking-[0.24em] text-white">
+          AI <span className="text-primary">Fit</span>
+        </span>
+      </Link>
+
       <form
         onSubmit={handleSubmit}
         className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 w-full max-w-md"
