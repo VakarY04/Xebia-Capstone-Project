@@ -91,7 +91,7 @@ Xebia-Capstone-Project/
 cd backend
 npm install
 cp .env.example .env   # fill in the values described below
-npm run dev
+npm run dev / node server.js
 ```
 
 Required environment variables (`backend/.env`):
